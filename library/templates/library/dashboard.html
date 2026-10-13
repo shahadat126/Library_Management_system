@@ -1,0 +1,244 @@
+
+{% extends "library/base.html" %}
+
+{% block title %}Admin Dashboard | BookNest{% endblock title %}
+
+{% block extra_css %}
+<style>
+    .dashboard-page {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .dashboard-header {
+        padding: 35px;
+        margin-bottom: 30px;
+        color: white;
+        border-radius: 20px;
+        background: linear-gradient(135deg, #6c63ff, #8b5cf6);
+        box-shadow: 0 10px 25px rgba(108, 99, 255, 0.18);
+    }
+
+    .dashboard-header h1 {
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+
+    .dashboard-header p {
+        margin-bottom: 0;
+        opacity: 0.9;
+    }
+
+    .stat-card {
+        height: 100%;
+        padding: 25px;
+        border: 1px solid #eeeaff;
+        border-radius: 18px;
+        background: white;
+        box-shadow: 0 6px 20px rgba(40, 30, 90, 0.05);
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 25px rgba(40, 30, 90, 0.10);
+    }
+
+    .stat-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 52px;
+        height: 52px;
+        margin-bottom: 18px;
+        border-radius: 15px;
+        color: #6c63ff;
+        background: #f0eeff;
+        font-size: 25px;
+    }
+
+    .stat-card h6 {
+        color: #77738d;
+        font-size: 14px;
+        margin-bottom: 10px;
+    }
+
+    .stat-card h2 {
+        color: #292544;
+        font-weight: 700;
+        margin-bottom: 0;
+    }
+
+    .dashboard-section {
+        padding: 28px;
+        margin-top: 30px;
+        border: 1px solid #eeeaff;
+        border-radius: 20px;
+        background: white;
+        box-shadow: 0 6px 20px rgba(40, 30, 90, 0.05);
+    }
+
+    .dashboard-section h3 {
+        color: #292544;
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+
+    .dashboard-section p {
+        color: #77738d;
+    }
+
+    .dashboard-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 12px 20px;
+        border-radius: 10px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .dashboard-btn:hover {
+        transform: translateY(-2px);
+    }
+
+    .btn-add-book {
+        color: white;
+        background: linear-gradient(135deg, #6c63ff, #8b5cf6);
+        box-shadow: 0 5px 15px rgba(108, 99, 255, 0.18);
+    }
+
+    .btn-add-book:hover {
+        color: white;
+        box-shadow: 0 8px 20px rgba(108, 99, 255, 0.28);
+    }
+
+    .btn-manage-book {
+        color: #6c63ff;
+        border: 1px solid #dcd7ff;
+        background: #f8f7ff;
+    }
+
+    .btn-manage-book:hover {
+        color: #5146d8;
+        background: #efedff;
+    }
+
+    @media (max-width: 576px) {
+        .dashboard-header,
+        .dashboard-section {
+            padding: 22px;
+        }
+    }
+</style>
+{% endblock extra_css %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="dashboard-page">
+
+        <!-- Dashboard Welcome -->
+        <div class="dashboard-header">
+            <h1>
+                <i class="bi bi-speedometer2 me-2"></i>
+                Admin Dashboard
+            </h1>
+
+            <p>
+                Welcome back,
+                <strong>{{ request.user.username }}</strong>!
+                Manage your library from here.
+            </p>
+        </div>
+
+        <!-- Statistics Cards -->
+        <div class="row g-4">
+
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="bi bi-book"></i>
+                    </div>
+                    <h6>Total Books</h6>
+                    <h2>{{ total_books }}</h2>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="bi bi-collection"></i>
+                    </div>
+                    <h6>Total Categories</h6>
+                    <h2>{{ total_categories }}</h2>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="bi bi-people"></i>
+                    </div>
+                    <h6>Total Users</h6>
+                    <h2>{{ total_users }}</h2>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-lg-6">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="bi bi-chat-square-text"></i>
+                    </div>
+                    <h6>Total Reviews</h6>
+                    <h2>{{ total_reviews }}</h2>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-lg-6">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="bi bi-star"></i>
+                    </div>
+                    <h6>Average Rating</h6>
+                    <h2>
+                        {{ average_reviews|default_if_none:"0"|floatformat:1 }}
+                        <small style="font-size: 16px; color: #f4b400;">
+                            <i class="bi bi-star-fill"></i>
+                        </small>
+                    </h2>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Book Management -->
+        <div class="dashboard-section">
+            <h3>
+                <i class="bi bi-gear me-2"></i>
+                Book Management
+            </h3>
+
+            <p>
+                Add new books to your library or manage existing books.
+            </p>
+
+            <div class="d-flex flex-wrap gap-3 mt-4">
+                <a href="{% url 'library:book_add' %}"
+                   class="dashboard-btn btn-add-book">
+                    <i class="bi bi-plus-circle"></i>
+                    Add New Book
+                </a>
+
+                <a href="{% url 'library:book_list' %}"
+                   class="dashboard-btn btn-manage-book">
+                    <i class="bi bi-pencil-square"></i>
+                    Manage Books
+                </a>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock content %}

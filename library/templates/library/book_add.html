@@ -1,0 +1,139 @@
+
+{% extends "library/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Add Book | BookNest{% endblock title %}
+
+{% block extra_css %}
+<style>
+    .add-book-page {
+        max-width: 850px;
+        margin: 0 auto;
+    }
+
+    .add-book-header {
+        padding: 30px;
+        margin-bottom: 28px;
+        color: white;
+        border-radius: 20px;
+        background: linear-gradient(135deg, #6c63ff, #8b5cf6);
+        box-shadow: 0 10px 25px rgba(108, 99, 255, 0.18);
+    }
+
+    .add-book-header h1 {
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+
+    .add-book-header p {
+        margin-bottom: 0;
+        opacity: 0.9;
+    }
+
+    .add-book-card {
+        padding: 30px;
+        border: 1px solid #eeeaff;
+        border-radius: 20px;
+        background: #fff;
+        box-shadow: 0 8px 25px rgba(40, 30, 90, 0.06);
+    }
+
+    .add-book-card label {
+        font-weight: 600;
+        color: #292544;
+    }
+
+    .add-book-card input:not([type="checkbox"]):not([type="radio"]),
+    .add-book-card select,
+    .add-book-card textarea {
+        border-radius: 10px;
+        border-color: #dedaf5;
+        padding: 11px 13px;
+    }
+
+    .add-book-card input:focus,
+    .add-book-card select:focus,
+    .add-book-card textarea:focus {
+        border-color: #7667f8;
+        box-shadow: 0 0 0 3px rgba(118, 103, 248, 0.12);
+    }
+
+    .btn-save-book {
+        padding: 12px 22px;
+        border: none;
+        border-radius: 10px;
+        color: white;
+        font-weight: 600;
+        background: linear-gradient(135deg, #6c63ff, #8b5cf6);
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn-save-book:hover {
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 7px 18px rgba(108, 99, 255, 0.25);
+    }
+
+    .btn-back-books {
+        display: inline-block;
+        padding: 11px 18px;
+        border: 1px solid #dcd7ff;
+        border-radius: 10px;
+        color: #6c63ff;
+        font-weight: 600;
+        text-decoration: none;
+        background: #f8f7ff;
+    }
+
+    .btn-back-books:hover {
+        color: #5146d8;
+        background: #efedff;
+    }
+
+    @media (max-width: 576px) {
+        .add-book-header,
+        .add-book-card {
+            padding: 22px;
+        }
+    }
+</style>
+{% endblock extra_css %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="add-book-page">
+
+        <!-- Page Header -->
+        <div class="add-book-header">
+            <h1>
+                <i class="bi bi-book-half me-2"></i>
+                Add New Book
+            </h1>
+            <p>Add a new book to your BookNest library collection.</p>
+        </div>
+
+        <!-- Book Form -->
+        <div class="add-book-card">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                {{ form|crispy }}
+
+                <div class="d-flex flex-wrap gap-3 mt-4">
+                    <button type="submit" class="btn-save-book">
+                        <i class="bi bi-plus-circle me-2"></i>
+                        Save Book
+                    </button>
+
+                    <a href="{% url 'library:book_list' %}"
+                       class="btn-back-books">
+                        <i class="bi bi-arrow-left me-2"></i>
+                        Back to Books
+                    </a>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+{% endblock content %}

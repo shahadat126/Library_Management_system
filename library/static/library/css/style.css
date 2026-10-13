@@ -1,0 +1,45 @@
+
+body {
+    background-color: #f5f7fb;
+    color: #202938;
+    font-family: Arial, sans-serif;
+}
+
+.navbar-brand {
+    letter-spacing: 0.5px;
+}
+
+.book-card,
+.review-card {
+    background: #ffffff;
+    border: 1px solid #e7ebf2;
+    border-radius: 14px;
+    padding: 20px;
+    transition: transform 0.2s ease,
+                box-shadow 0.2s ease;
+}
+
+.book-card:hover,
+.review-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(20, 35, 60, 0.08);
+}
+
+.btn-primary {
+    background-color: #3457d5;
+    border-color: #3457d5;
+}
+
+.btn-primary:hover {
+    background-color: #2645b5;
+    border-color: #2645b5;
+}
+
+.section-title {
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.review-card {
+    margin-bottom: 16px;
+}
